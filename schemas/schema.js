@@ -11,7 +11,25 @@ export default createSchema({
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
-    /* Your types here! */
+    // authors schema below!
+    {
+      name: 'author',
+      type: 'document',
+      title: 'Author',
+      fields: [
+        {
+          name: 'name',
+          title: 'Name',
+          type: 'string'
+        }, 
+        {
+          name: 'avatar',
+          title: 'Avatar',
+          type: 'image'
+        }
+      ]
+    },
+    // articles schema below!
     {
       name: "blog",
       type: "document",
@@ -28,10 +46,29 @@ export default createSchema({
           title: "Subtitle",
         },
         {
+          name: 'coverImage',
+          title: 'Cover Image',
+          type: 'image'
+        },
+        {
+          name: 'date',
+          title: 'Date',
+          type: 'datetime',
+          validation: Rule => Rule.required().error('Date is requiered ## __ TESTING __ ##')
+        },
+        {
+          name: 'author',
+          title: 'Author',
+          type: 'reference',
+          to: [{type: 'author'}],
+          validation: Rule => Rule.required()
+        },
+        {
           name: "slug",
           type: "slug",
           title: "Slug",
           maxLength: 200,
+          validation: Rule => Rule.required(),
           options: {
             source: "title",
             slugify: (input) =>
