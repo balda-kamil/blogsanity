@@ -13,21 +13,21 @@ export default createSchema({
   types: schemaTypes.concat([
     // authors schema below!
     {
-      name: 'author',
-      type: 'document',
-      title: 'Author',
+      name: "author",
+      type: "document",
+      title: "Author",
       fields: [
         {
-          name: 'name',
-          title: 'Name',
-          type: 'string'
-        }, 
+          name: "name",
+          title: "Name",
+          type: "string",
+        },
         {
-          name: 'avatar',
-          title: 'Avatar',
-          type: 'image'
-        }
-      ]
+          name: "avatar",
+          title: "Avatar",
+          type: "image",
+        },
+      ],
     },
     // articles schema below!
     {
@@ -46,29 +46,69 @@ export default createSchema({
           title: "Subtitle",
         },
         {
-          name: 'coverImage',
-          title: 'Cover Image',
-          type: 'image'
+          name: "coverImage",
+          title: "Cover Image",
+          type: "image",
+          fields: [
+            {
+              type: "text",
+              name: "alt",
+              title: "Alt",
+            },
+          ],
         },
         {
-          name: 'date',
-          title: 'Date',
-          type: 'datetime',
-          validation: Rule => Rule.required().error('Date is requiered ## __ TESTING __ ##')
+          name: "content",
+          title: "Content",
+          type: "array",
+          of: [
+            {
+              type: "block",
+            },
+            {
+              type: "image",
+              fields: [
+                {
+                  type: "text",
+                  name: "alt",
+                  title: "Alt",
+                  options: {
+                    isHighlighted: true,
+                  },
+                },
+              ],
+              options: {
+                hotspot: true,
+              },
+            },
+            {
+              type: 'code',
+              options: {
+                withFilename: true
+              }
+            }
+          ]
         },
         {
-          name: 'author',
-          title: 'Author',
-          type: 'reference',
-          to: [{type: 'author'}],
-          validation: Rule => Rule.required()
+          name: "date",
+          title: "Date",
+          type: "datetime",
+          validation: (Rule) =>
+            Rule.required().error("Date is requiered ## __ TESTING __ ##"),
+        },
+        {
+          name: "author",
+          title: "Author",
+          type: "reference",
+          to: [{ type: "author" }],
+          validation: (Rule) => Rule.required(),
         },
         {
           name: "slug",
           type: "slug",
           title: "Slug",
           maxLength: 200,
-          validation: Rule => Rule.required(),
+          validation: (Rule) => Rule.required(),
           options: {
             source: "title",
             slugify: (input) =>
