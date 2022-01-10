@@ -49,6 +49,9 @@ export default createSchema({
           name: "coverImage",
           title: "Cover Image",
           type: "image",
+          options: {
+            hotspot: true,
+          },
           fields: [
             {
               type: "text",
@@ -69,6 +72,20 @@ export default createSchema({
               type: "image",
               fields: [
                 {
+                  title: "Image Position",
+                  name: "imagePosition",
+                  type: "string",
+                  options: {
+                    list: [
+                      { title: "Center", value: "center" },
+                      { title: "Left", value: "left" },
+                      { title: "Right", value: "right" },
+                    ],
+                    layout: 'radio',
+                    isHighlighted: true
+                  },
+                },
+                {
                   type: "text",
                   name: "alt",
                   title: "Alt",
@@ -82,12 +99,12 @@ export default createSchema({
               },
             },
             {
-              type: 'code',
+              type: "code",
               options: {
-                withFilename: true
-              }
-            }
-          ]
+                withFilename: true,
+              },
+            },
+          ],
         },
         {
           name: "date",
